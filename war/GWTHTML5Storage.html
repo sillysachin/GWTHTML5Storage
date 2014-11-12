@@ -1,0 +1,74 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the     -->
+<!-- browser's rendering engine into                -->
+<!-- "Standards Mode". Replacing this declaration   -->
+<!-- with a "Quirks Mode" doctype is not supported. -->
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="GWTHTML5Storage.css">
+
+<!--                                           -->
+<!-- Any title is fine                         -->
+<!--                                           -->
+<title>Web Application Starter Project</title>
+<script type="text/javascript">
+	function load() {
+		if (window.localStorage) {
+			var t0 = Number(window.localStorage['myUnloadEventFlag']);
+			if (isNaN(t0))
+				t0 = 0;
+			var t1 = new Date().getTime();
+			var duration = t1 - t0;
+			if (duration < 10 * 1000) {
+				// less than 10 seconds since the previous Unload event => it's a browser reload (so cancel the disconnection request)
+				//TODO: askServerToCancelDisconnectionRequest(); // asynchronous AJAX call
+			} else {
+				// last unload event was for a tab/window close => do whatever you want (I do nothing here)
+			}
+		}
+	}
+	function unload(event) {
+		if (window.localStorage) {
+			// flag the page as behing unloading
+			window.localStorage['myUnloadEventFlag'] = new Date().getTime();
+		}
+
+		// notify the server that we want to disconnect the used in a few seconds (I used 5 seconds)
+		//TODO: askServerToDisconnectUserInAFewSeconds(); // synchronous AJAX call
+	}
+</script>
+<!--                                           -->
+<!-- This script loads your compiled module.   -->
+<!-- If you add any GWT meta tags, they must   -->
+<!-- be added before this line.                -->
+<!--                                           -->
+<script type="text/javascript" language="javascript"
+	src="gwthtml5storage/gwthtml5storage.nocache.js"></script>
+</head>
+
+<!--                                           -->
+<!-- The body can have arbitrary html, or      -->
+<!-- you can leave the body empty if you want  -->
+<!-- to create a completely dynamic UI.        -->
+<!--                                           -->
+<body onload="load();" onunload="">
+
+	<!-- OPTIONAL: include this if you want history support -->
+	<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+		style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+
+	<!-- RECOMMENDED if your web app will not function without JavaScript enabled -->
+	<noscript>
+		<div
+			style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+			Your web browser must have JavaScript enabled in order for this
+			application to display correctly.</div>
+	</noscript>
+</body>
+</html>
